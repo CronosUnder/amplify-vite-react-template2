@@ -48,14 +48,14 @@ const schema = a.schema({
     teamId: a.id(),
     // 2. Create a belongsTo relationship with the reference field
     team: a.belongsTo('Team', 'teamId'),
-  }),
+  }).authorization((allow) => [allow.publicApiKey()]),
 
   Team: a.model({
     mantra: a.string().required(),
     // 3. Create a hasMany relationship with the reference field
     //    from the `Member`s model.
     members: a.hasMany('Member', 'teamId'),
-  }),
+  }).authorization((allow) => [allow.publicApiKey()]),
 });
 
 export type Schema = ClientSchema<typeof schema>;
