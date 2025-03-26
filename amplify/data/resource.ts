@@ -49,12 +49,30 @@ const schema = a.schema({
     // 2. Create a belongsTo relationship with the reference field
     team: a.belongsTo('Team', 'teamId'),
   }).authorization((allow) => [allow.publicApiKey()]),
-
   Team: a.model({
     mantra: a.string().required(),
     // 3. Create a hasMany relationship with the reference field
     //    from the `Member`s model.
     members: a.hasMany('Member', 'teamId'),
+  }).authorization((allow) => [allow.publicApiKey()]),
+  Post: a.model({
+    name: a.string().required(),
+    description: a.string().required(),
+    owner: a.string(),
+    createdAt: a.string(),
+    playlists: a.hasMany('PlaylistPost', 'postId'),
+  }).authorization((allow) => [allow.publicApiKey()]),
+  Playlist: a.model({
+    name: a.string().required(),
+    description: a.string().required(),
+    owner: a.string(),
+    createdAt: a.string(),
+    posts: a.hasMany('PlaylistPost', 'playlistId'),
+  }).authorization((allow) => [allow.publicApiKey()]),
+  PlaylistPost: a.model({
+    createdAt: a.string(),
+    playlist: a.belongsTo('Playlist', 'playlistId'),
+    post: a.belongsTo('Post', 'postId'),
   }).authorization((allow) => [allow.publicApiKey()]),
 });
 
