@@ -71,6 +71,8 @@ const schema = a.schema({
   }).authorization((allow) => [allow.publicApiKey()]),
   PlaylistPost: a.model({
     createdAt: a.string(),
+    playlistId: a.id(),  // Agregamos el ID de la playlist
+    postId: a.id(),  // Agregamos el ID del post
     playlist: a.belongsTo('Playlist', 'playlistId'),
     post: a.belongsTo('Post', 'postId'),
   }).authorization((allow) => [allow.publicApiKey()]),
